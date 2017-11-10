@@ -718,7 +718,7 @@
        <enum>QTabWidget::North</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab">
        <attribute name="icon">
@@ -2521,6 +2521,7 @@
     </property>
     <addaction name="actionSaveRoutes"/>
     <addaction name="actionLoadRoutes"/>
+    <addaction name="actionLoadTrajectoryFile"/>
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuTests">
@@ -2598,6 +2599,15 @@
    </property>
    <property name="toolTip">
     <string>Intersection Test</string>
+   </property>
+  </action>
+  <action name="actionLoadTrajectoryFile">
+   <property name="icon">
+    <iconset>
+     <normaloff>Icons/Open Folder-96.png</normaloff>Icons/Open Folder-96.png</iconset>
+   </property>
+   <property name="text">
+    <string>Load Trajectory File</string>
    </property>
   </action>
  </widget>

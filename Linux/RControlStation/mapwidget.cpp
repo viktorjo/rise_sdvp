@@ -178,10 +178,18 @@ MapWidget::MapWidget(QWidget *parent) : QWidget(parent)
 //    mRefLon = 12.89134921;
 //    mRefHeight = 219.0;
 
-    // ASTA
-    mRefLat = 57.78100308;
-    mRefLon = 12.76925422;
-    mRefHeight = 253.76;
+    // ASTA High speed
+    //mRefLat = 57.78100308;
+    //mRefLon = 12.76925422;
+    //mRefHeight = 253.76;
+
+    // TODO: make a list with different locations which you can choose from
+
+    // ASTA Chronos
+    mRefLat = 57.777360; // LATb
+    mRefLon = 12.780472; // LONb
+    mRefHeight = 201.934115075;
+
 
     // Home
     //    mRefLat = 57.57848470;
@@ -361,6 +369,10 @@ void MapWidget::moveView(double px, double py)
     mXOffset = -followLoc.getX() * 1000.0 * mScaleFactor;
     mYOffset = -followLoc.getY() * 1000.0 * mScaleFactor;
     update();
+}
+
+void MapWidget::addInfoTrace(QList<LocPoint> trace){
+    mInfoTraces.append(trace);
 }
 
 void MapWidget::clearTrace()

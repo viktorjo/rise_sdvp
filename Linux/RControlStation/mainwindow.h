@@ -138,6 +138,7 @@ private slots:
     void on_actionExit_triggered();
     void on_actionSaveRoutes_triggered();
     void on_actionLoadRoutes_triggered();
+    void on_actionLoadTrajectoryFile_triggered();
     void on_actionTestIntersection_triggered();
 
 private:

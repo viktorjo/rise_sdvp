@@ -58,6 +58,9 @@ public:
     void setXOffset(double offset);
     void setYOffset(double offset);
     void moveView(double px, double py);
+
+    void addInfoTrace(QList<LocPoint> trace);
+
     void clearTrace();
     void addRoutePoint(double px, double py, double speed = 0.0, qint32 time = 0);
     QList<LocPoint> getRoute(int ind = -1);

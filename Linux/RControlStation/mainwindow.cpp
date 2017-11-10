@@ -1643,6 +1643,65 @@ void MainWindow::on_actionLoadRoutes_triggered()
     }
 }
 
+void MainWindow::on_actionLoadTrajectoryFile_triggered()
+{
+    QString filename = QFileDialog::getOpenFileName(this,
+                                                    tr("Load Trajectory"), ".",
+                                                    "");
+
+    if (!filename.isEmpty()) {
+        QFile file(filename);
+        if (!file.open(QIODevice::ReadOnly)) {
+            QMessageBox::critical(this, "Load Trajectory",
+                                  "Could not open\n" + filename + "\nfor reading");
+            return;
+        }
+
+        bool hasStart = false, hasEnd = false, hasCompleteLines = false;
+
+        MapWidget *map = ui->mapWidget;
+        double llh_ref[3];
+        double llh[3];
+        double xyz[3];
+        map->getEnuRef(llh_ref);
+
+        qDebug() << "{mRefLat,mRefLon,mRefHeight}\n" << "{"
+                 << llh_ref[0] << "," << llh_ref[1] << "," << llh_ref[2] << "}";
+
+        QTextStream stream(&file);
+
+        // Check that the file is correct
+        /* CODE HERE */
+
+        QString line;
+        QList<LocPoint> trace;
+        while(!stream.atEnd())
+        {
+            line = stream.readLine();
+            QStringList list = line.split(';');
+
+            if(list[0].compare("LINE") == 0)
+            {
+                xyz[0] = list[2].toDouble();
+                xyz[1] = list[3].toDouble();
+                xyz[2] = list[4].toDouble();
+
+                llh[0] = xyz[1] / ((M_PI/180)*6378137.0) + llh_ref[0];
+                llh[1] = xyz[0] / ((M_PI/180)*6378137.0*cos(((llh[0] + llh_ref[0])/2)*(M_PI/180))) + llh_ref[1];
+                llh[2] = llh_ref[2] + xyz[2];
+
+                utility::llhToEnu(llh_ref,llh,xyz);
+
+                trace.append(LocPoint(xyz[0],xyz[1]));
+
+            }
+        }
+        map->addInfoTrace(trace);
+        map->update();
+    }
+
+}
+
 void MainWindow::on_actionTestIntersection_triggered()
 {
     mIntersectionTest->show();
